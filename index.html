@@ -1,24 +1,42 @@
 <!doctype html>
 <html lang="ja">
 <head>
+
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#F7F3EE">
+
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1,viewport-fit=cover"
+>
+
+<meta
+  name="theme-color"
+  content="#F7F3EE"
+>
+
 <title>高難易度ビンタクイズ</title>
 
+
 <style>
+
+/* ==================================================
+   基本設定
+================================================== */
+
 *{
   box-sizing:border-box;
 }
 
-html{
+html,
+body{
+  margin:0;
+  padding:0;
+  width:100%;
+  min-height:100%;
   background:#F7F3EE;
 }
 
 body{
-  margin:0;
-  background:#F7F3EE;
-  color:#3B302B;
   font-family:
     -apple-system,
     BlinkMacSystemFont,
@@ -26,115 +44,113 @@ body{
     "Hiragino Sans",
     "Yu Gothic",
     sans-serif;
+
+  color:#3B302B;
+
+  -webkit-tap-highlight-color:transparent;
 }
 
-/* ================================
+
+/* ==================================================
    全体
-================================ */
+================================================== */
 
-.wrap{
-  min-height:100svh;
-  display:flex;
-  justify-content:center;
-  align-items:flex-start;
-  padding:20px 12px 36px;
-}
-
-.card{
-  width:min(100%,440px);
-  background:#FFFFFF;
-  border:1px solid #E3DCD5;
-  border-radius:28px;
-  padding:20px;
-  box-shadow:0 8px 24px rgba(75,55,45,.08);
-}
-
-/* ================================
-   タイトル画面
-================================ */
-
-#title{
-  text-align:center;
-}
-
-.title-badge{
-  display:inline-block;
-  margin:4px auto 18px;
-  padding:7px 15px;
-  border-radius:999px;
-  background:#3B302B;
-  color:#FFFFFF;
-  font-size:11px;
-  font-weight:800;
-  letter-spacing:1.4px;
-}
-
-.title-main{
-  margin:0;
-  font-size:42px;
-  line-height:1.12;
-  font-weight:900;
-  letter-spacing:-1px;
-}
-
-.title-main span{
-  display:block;
-}
-
-.title-sub{
-  margin:13px 0 0;
-  color:#8A7D75;
-  font-size:16px;
-  font-weight:700;
-}
-
-.title-dog{
-  width:min(100%,280px);
-  margin:28px auto 24px;
-  display:block;
-}
-
-.start-button{
+#app{
   width:100%;
-  border:0;
-  border-radius:16px;
-  background:#D98A62;
-  color:#FFFFFF;
-  padding:16px 18px;
-  font-size:18px;
-  font-weight:900;
+  min-height:100svh;
+}
+
+.screen{
+  width:100%;
+  min-height:100svh;
+}
+
+
+/* ==================================================
+   タイトル画面
+================================================== */
+
+#titleScreen{
+  display:block;
+
+  width:100%;
+  min-height:100svh;
+
   cursor:pointer;
-  box-shadow:0 4px 0 #B96D4C;
+
   touch-action:manipulation;
 }
 
-.start-button:active{
-  transform:translateY(2px);
-  box-shadow:0 2px 0 #B96D4C;
+#titleScreen img{
+  display:block;
+
+  width:100%;
+  height:100svh;
+
+  object-fit:contain;
 }
 
-/* ================================
+
+/* ==================================================
    ゲーム画面
-================================ */
+================================================== */
 
-#game{
+#gameScreen{
   display:none;
+
+  min-height:100svh;
+
+  padding:
+    max(18px, env(safe-area-inset-top))
+    14px
+    max(28px, env(safe-area-inset-bottom));
+
+  background:#F7F3EE;
 }
+
+.game-card{
+  width:min(100%,440px);
+
+  margin:0 auto;
+
+  background:#FFFFFF;
+
+  border:1px solid #E3DCD5;
+
+  border-radius:28px;
+
+  padding:20px;
+
+  box-shadow:
+    0 8px 24px rgba(75,55,45,.08);
+}
+
+
+/* ==================================================
+   ゲームタイトル
+================================================== */
 
 .brand{
   display:flex;
+
   align-items:center;
+
   gap:11px;
+
   margin-bottom:20px;
 }
 
 .brand-mark{
   width:44px;
   height:44px;
+
   border-radius:14px;
+
   background:#F2D2B7;
+
   display:grid;
   place-items:center;
+
   flex-shrink:0;
 }
 
@@ -145,54 +161,86 @@ body{
 
 .brand-title{
   margin:0;
+
   font-size:21px;
+
   font-weight:900;
+
   line-height:1.1;
 }
 
 .brand-sub{
   margin-top:4px;
+
   color:#93867E;
+
   font-size:10px;
+
   font-weight:700;
+
   letter-spacing:1px;
 }
 
+
+/* ==================================================
+   問題文
+================================================== */
+
 .question{
   margin:0 0 8px;
+
   font-size:24px;
+
   line-height:1.3;
+
   font-weight:900;
+
   letter-spacing:-.4px;
 }
 
 .note{
   margin:0 0 18px;
+
   color:#8A7D75;
+
   font-size:12px;
+
   line-height:1.6;
 }
 
-/* ================================
-   写真グリッド
-================================ */
+
+/* ==================================================
+   画像グリッド
+================================================== */
 
 .grid{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
+
+  grid-template-columns:
+    repeat(3,1fr);
+
   gap:8px;
 }
 
 .tile{
   position:relative;
+
   aspect-ratio:1/1;
+
   padding:0;
+
   border:3px solid transparent;
+
   border-radius:15px;
+
   overflow:hidden;
+
   background:#F1EFEC;
+
   cursor:pointer;
+
   touch-action:manipulation;
+
   transition:
     border-color .15s ease,
     transform .15s ease,
@@ -202,49 +250,71 @@ body{
 .tile img{
   width:100%;
   height:100%;
+
   object-fit:cover;
+
   display:block;
 }
 
 .tile.selected{
   border-color:#D98A62;
+
   transform:translateY(-2px);
-  box-shadow:0 4px 12px rgba(217,138,98,.22);
+
+  box-shadow:
+    0 4px 12px rgba(217,138,98,.22);
 }
 
 .tile.selected::after{
   content:"";
+
   position:absolute;
+
   inset:0;
+
   background:rgba(217,138,98,.10);
+
   pointer-events:none;
 }
 
 .check{
   position:absolute;
+
   right:6px;
   bottom:6px;
+
   width:27px;
   height:27px;
+
   border-radius:50%;
+
   background:#D98A62;
+
   color:#FFFFFF;
+
   display:none;
+
   align-items:center;
   justify-content:center;
+
   font-size:15px;
+
   font-weight:900;
+
   z-index:2;
-  box-shadow:0 2px 5px rgba(0,0,0,.15);
+
+  box-shadow:
+    0 2px 5px rgba(0,0,0,.15);
 }
 
 .tile.selected .check{
   display:flex;
 }
 
-/* ================================
+
+/* ==================================================
    決定ボタン
-================================ */
+================================================== */
 
 .actions{
   margin-top:17px;
@@ -252,161 +322,89 @@ body{
 
 .confirm{
   width:100%;
+
   border:0;
+
   border-radius:15px;
+
   background:#3B302B;
+
   color:#FFFFFF;
+
   padding:15px 16px;
+
   font-size:16px;
+
   font-weight:900;
+
   cursor:pointer;
+
   touch-action:manipulation;
-  box-shadow:0 3px 0 #241D19;
+
+  box-shadow:
+    0 3px 0 #241D19;
 }
 
 .confirm:active:not(:disabled){
   transform:translateY(2px);
-  box-shadow:0 1px 0 #241D19;
+
+  box-shadow:
+    0 1px 0 #241D19;
 }
 
 .confirm:disabled{
   background:#E7E2DE;
+
   color:#AAA09A;
+
   box-shadow:none;
+
   cursor:not-allowed;
 }
 
-/* ================================
+
+/* ==================================================
    結果画面
-================================ */
+================================================== */
 
-.result{
+#resultScreen{
   display:none;
-  text-align:center;
-}
 
-.result.show{
-  display:block;
-}
-
-.result-panel{
-  border-radius:21px;
-  padding:20px 15px 18px;
-}
-
-.result.success .result-panel{
-  background:#EEF6EF;
-}
-
-.result.failure .result-panel{
-  background:#FBF0EF;
-}
-
-.result-dog{
-  width:min(100%,220px);
-  margin:0 auto 8px;
-  display:block;
-}
-
-.result-badge{
-  display:inline-block;
-  padding:6px 12px;
-  border-radius:999px;
-  font-size:10px;
-  font-weight:800;
-  letter-spacing:1px;
-}
-
-.result.success .result-badge{
-  background:#71977A;
-  color:#FFFFFF;
-}
-
-.result.failure .result-badge{
-  background:#A96F6B;
-  color:#FFFFFF;
-}
-
-.result h2{
-  margin:12px 0 7px;
-  font-size:29px;
-  line-height:1.2;
-  font-weight:900;
-}
-
-.result.success h2{
-  color:#557D5D;
-}
-
-.result.failure h2{
-  color:#9C625E;
-}
-
-.result p{
-  margin:0 0 19px;
-  color:#665A54;
-  font-size:14px;
-  line-height:1.7;
-  font-weight:700;
-}
-
-.retry{
   width:100%;
-  border:0;
-  border-radius:14px;
-  padding:14px 16px;
-  font-size:16px;
-  font-weight:900;
+  min-height:100svh;
+
   cursor:pointer;
+
   touch-action:manipulation;
 }
 
-.result.success .retry{
-  background:#71977A;
-  color:#FFFFFF;
-  box-shadow:0 3px 0 #557D5D;
+#resultScreen img{
+  display:block;
+
+  width:100%;
+  height:100svh;
+
+  object-fit:contain;
 }
 
-.result.failure .retry{
-  background:#A96F6B;
-  color:#FFFFFF;
-  box-shadow:0 3px 0 #824F4B;
-}
 
-.retry:active{
-  transform:translateY(2px);
-  box-shadow:0 1px 0 rgba(0,0,0,.2);
-}
-
-/* ================================
-   フッター
-================================ */
-
-.footer{
-  margin-top:17px;
-  text-align:center;
-  color:#A49A94;
-  font-size:10px;
-  line-height:1.5;
-}
-
-/* ================================
+/* ==================================================
    小さいスマホ
-================================ */
+================================================== */
 
 @media(max-width:360px){
 
-  .wrap{
-    padding:14px 10px 28px;
+  #gameScreen{
+    padding:
+      max(12px, env(safe-area-inset-top))
+      10px
+      max(20px, env(safe-area-inset-bottom));
   }
 
-  .card{
+  .game-card{
     padding:16px;
-    border-radius:24px;
-  }
 
-  .title-main{
-    font-size:36px;
+    border-radius:24px;
   }
 
   .question{
@@ -420,322 +418,176 @@ body{
   .tile{
     border-radius:12px;
   }
+
 }
+
 </style>
+
 </head>
 
 
 <body>
 
-<div class="wrap">
 
-<main class="card">
-
-
-<!-- =================================
-     タイトル画面
-================================= -->
-
-<section id="title">
-
-  <div class="title-badge">
-    BINTA CAPTCHA
-  </div>
-
-  <h1 class="title-main">
-    <span>高難易度</span>
-    <span>ビンタクイズ</span>
-  </h1>
-
-  <p class="title-sub">
-    本物のビンタを見抜け！
-  </p>
+<div id="app">
 
 
-  <!-- キャバリア・イラスト -->
+  <!-- ==================================================
+       タイトル画面
 
-  <svg
-    class="title-dog"
-    viewBox="0 0 300 240"
-    aria-label="キャバリアのイラスト"
-    role="img"
+       image01.jpeg
+       画面のどこをタップしてもゲーム開始
+  ================================================== -->
+
+  <section
+    id="titleScreen"
+    aria-label="高難易度ビンタクイズ スタート"
   >
 
-    <!-- 影 -->
-    <ellipse
-      cx="150"
-      cy="213"
-      rx="92"
-      ry="13"
-      fill="#E4DDD6"
-    />
+    <img
+      src="image01.jpeg"
+      alt="高難易度ビンタクイズ 本物のビンタを見抜け！"
+    >
 
-    <!-- 左耳 -->
-    <path
-      d="M82 82
-         C48 60 29 89 39 126
-         C47 155 69 168 91 147
-         L105 107 Z"
-      fill="#9B5B40"
-    />
-
-    <!-- 右耳 -->
-    <path
-      d="M218 82
-         C252 60 271 89 261 126
-         C253 155 231 168 209 147
-         L195 107 Z"
-      fill="#9B5B40"
-    />
-
-    <!-- 顔 -->
-    <path
-      d="M78 91
-         C78 54 222 54 222 91
-         L211 166
-         C199 192 101 192 89 166 Z"
-      fill="#FFF4DF"
-      stroke="#6B4638"
-      stroke-width="5"
-      stroke-linejoin="round"
-    />
-
-    <!-- 頭の栗色 -->
-    <path
-      d="M89 91
-         C103 62 197 62 211 91
-         C187 103 113 103 89 91 Z"
-      fill="#9B5B40"
-    />
-
-    <!-- 左目 -->
-    <ellipse
-      cx="116"
-      cy="125"
-      rx="13"
-      ry="17"
-      fill="#35251F"
-    />
-
-    <!-- 右目 -->
-    <ellipse
-      cx="184"
-      cy="125"
-      rx="13"
-      ry="17"
-      fill="#35251F"
-    />
-
-    <!-- 左目の光 -->
-    <circle
-      cx="112"
-      cy="120"
-      r="4"
-      fill="#FFFFFF"
-    />
-
-    <!-- 右目の光 -->
-    <circle
-      cx="180"
-      cy="120"
-      r="4"
-      fill="#FFFFFF"
-    />
-
-    <!-- 鼻 -->
-    <ellipse
-      cx="150"
-      cy="146"
-      rx="16"
-      ry="12"
-      fill="#35251F"
-    />
-
-    <!-- 口 -->
-    <path
-      d="M132 165
-         Q150 181 168 165"
-      fill="none"
-      stroke="#9B5B40"
-      stroke-width="5"
-      stroke-linecap="round"
-    />
-
-    <!-- ほっぺ -->
-    <circle
-      cx="98"
-      cy="151"
-      r="7"
-      fill="#F2B7A1"
-      opacity=".65"
-    />
-
-    <circle
-      cx="202"
-      cy="151"
-      r="7"
-      fill="#F2B7A1"
-      opacity=".65"
-    />
-
-  </svg>
+  </section>
 
 
-  <button
-    id="start"
-    class="start-button"
-    type="button"
+
+  <!-- ==================================================
+       ゲーム画面
+  ================================================== -->
+
+  <section
+    id="gameScreen"
   >
-    スタート
-  </button>
 
-</section>
+    <main class="game-card">
 
 
+      <div class="brand">
 
-<!-- =================================
-     ゲーム画面
-================================= -->
+        <div class="brand-mark">
 
-<section id="game">
+          <svg
+            viewBox="0 0 40 40"
+            aria-hidden="true"
+          >
 
-  <div class="brand">
+            <ellipse
+              cx="20"
+              cy="25"
+              rx="8"
+              ry="10"
+              fill="#6B4638"
+            />
 
-    <div class="brand-mark">
+            <circle
+              cx="11"
+              cy="13"
+              r="4"
+              fill="#6B4638"
+            />
 
-      <svg
-        viewBox="0 0 40 40"
-        aria-hidden="true"
-      >
+            <circle
+              cx="18"
+              cy="9"
+              r="4"
+              fill="#6B4638"
+            />
 
-        <ellipse
-          cx="20"
-          cy="25"
-          rx="8"
-          ry="10"
-          fill="#6B4638"
-        />
+            <circle
+              cx="25"
+              cy="9"
+              r="4"
+              fill="#6B4638"
+            />
 
-        <circle
-          cx="11"
-          cy="13"
-          r="4"
-          fill="#6B4638"
-        />
+            <circle
+              cx="31"
+              cy="14"
+              r="4"
+              fill="#6B4638"
+            />
 
-        <circle
-          cx="18"
-          cy="9"
-          r="4"
-          fill="#6B4638"
-        />
+          </svg>
 
-        <circle
-          cx="25"
-          cy="9"
-          r="4"
-          fill="#6B4638"
-        />
+        </div>
 
-        <circle
-          cx="31"
-          cy="14"
-          r="4"
-          fill="#6B4638"
-        />
 
-      </svg>
+        <div>
 
-    </div>
+          <h2 class="brand-title">
+            ビンタ認証
+          </h2>
 
-    <div>
+          <div class="brand-sub">
+            BINTA CAPTCHA
+          </div>
 
-      <h2 class="brand-title">
-        ビンタ認証
-      </h2>
+        </div>
 
-      <div class="brand-sub">
-        BINTA CAPTCHA
       </div>
 
-    </div>
-
-  </div>
 
 
-  <p class="question">
-    ビンタだけを選んでね
-  </p>
+      <p class="question">
+        ビンタだけを選んでね
+      </p>
 
-  <p class="note">
-    9枚の中には、ビンタ画像が4～8枚あります。
-  </p>
-
-
-  <div
-    id="grid"
-    class="grid"
-  ></div>
+      <p class="note">
+        9枚の中には、ビンタ画像が4～8枚あります。
+      </p>
 
 
-  <div class="actions">
+      <div
+        id="grid"
+        class="grid"
+      ></div>
 
-    <button
-      id="confirm"
-      class="confirm"
-      type="button"
-      disabled
+
+      <div class="actions">
+
+        <button
+          id="confirm"
+          class="confirm"
+          type="button"
+          disabled
+        >
+          これで決定
+        </button>
+
+      </div>
+
+
+    </main>
+
+  </section>
+
+
+
+  <!-- ==================================================
+       結果画面
+
+       image02.png → 不正解
+       image03.png → 正解
+
+       画像のどこをタップしても
+       次の問題へ
+  ================================================== -->
+
+  <section
+    id="resultScreen"
+    aria-label="クイズ結果"
+  >
+
+    <img
+      id="resultImage"
+      src=""
+      alt="クイズ結果"
     >
-      これで決定
-    </button>
 
-  </div>
+  </section>
 
-</section>
-
-
-
-<!-- =================================
-     結果画面
-================================= -->
-
-<section
-  id="result"
-  class="result"
->
-
-  <div class="result-panel">
-
-    <div id="mark"></div>
-
-    <div
-      id="badge"
-      class="result-badge"
-    ></div>
-
-    <h2 id="resultTitle"></h2>
-
-    <p id="resultText"></p>
-
-    <button
-      id="retry"
-      class="retry"
-      type="button"
-    >
-      もう一回チャレンジ
-    </button>
-
-  </div>
-
-</section>
-
-
-<div class="footer">
-  画像はこのHTMLと同じGitHubリポジトリに置いてください。
-</div>
-
-
-</main>
 
 </div>
 
@@ -743,44 +595,55 @@ body{
 
 <script>
 
-/* =========================================
-   ビンタ認証
+/* ==================================================
+   ビンタ画像
 
-   当たり画像
+   当たり
    hit01.jpeg ～ hit30.jpeg
 
-   ハズレ画像
+   ハズレ
    miss01.jpeg ～ miss10.jpeg
-
-   1ゲームにつき9枚。
-
-   ハズレ1～5枚
-   当たり4～8枚。
-
-   同じゲーム内では画像重複なし。
-========================================= */
-
-
-/* =========================================
-   画像リスト
-========================================= */
+================================================== */
 
 const hits = Array.from(
   {length:30},
   (_,i) =>
-    `hit${String(i+1).padStart(2,"0")}.jpeg`
+    `hit${String(i + 1).padStart(2,"0")}.jpeg`
 );
 
 const misses = Array.from(
   {length:10},
   (_,i) =>
-    `miss${String(i+1).padStart(2,"0")}.jpeg`
+    `miss${String(i + 1).padStart(2,"0")}.jpeg`
 );
 
 
-/* =========================================
+/* ==================================================
+   画面要素
+================================================== */
+
+const titleScreen =
+  document.getElementById("titleScreen");
+
+const gameScreen =
+  document.getElementById("gameScreen");
+
+const resultScreen =
+  document.getElementById("resultScreen");
+
+const resultImage =
+  document.getElementById("resultImage");
+
+const grid =
+  document.getElementById("grid");
+
+const confirmBtn =
+  document.getElementById("confirm");
+
+
+/* ==================================================
    シャッフル
-========================================= */
+================================================== */
 
 function shuffle(arr){
 
@@ -793,19 +656,22 @@ function shuffle(arr){
   ){
 
     const j =
-      Math.floor(Math.random() * (i + 1));
+      Math.floor(
+        Math.random() * (i + 1)
+      );
 
     [a[i],a[j]] =
       [a[j],a[i]];
+
   }
 
   return a;
 }
 
 
-/* =========================================
+/* ==================================================
    1ゲーム分の9枚を作成
-========================================= */
+================================================== */
 
 function makeRound(){
 
@@ -826,23 +692,25 @@ function makeRound(){
 
 
   /*
-    当たり画像を重複なしで抽選
+    当たり画像
   */
 
   const selectedHits =
-    shuffle(hits).slice(0,hitCount);
+    shuffle(hits)
+      .slice(0,hitCount);
 
 
   /*
-    ハズレ画像を重複なしで抽選
+    ハズレ画像
   */
 
   const selectedMisses =
-    shuffle(misses).slice(0,missCount);
+    shuffle(misses)
+      .slice(0,missCount);
 
 
   /*
-    当たり・ハズレをまとめる
+    正解情報を付ける
   */
 
   const roundItems = [
@@ -865,288 +733,37 @@ function makeRound(){
 
 
   /*
-    最後に全体をシャッフル
+    全体をシャッフル
   */
 
   return shuffle(roundItems);
 }
 
 
-/* =========================================
-   HTML要素
-========================================= */
-
-const title =
-  document.getElementById("title");
-
-const start =
-  document.getElementById("start");
-
-const game =
-  document.getElementById("game");
-
-const grid =
-  document.getElementById("grid");
-
-const confirmBtn =
-  document.getElementById("confirm");
-
-const result =
-  document.getElementById("result");
-
-const mark =
-  document.getElementById("mark");
-
-const badge =
-  document.getElementById("badge");
-
-const resultTitle =
-  document.getElementById("resultTitle");
-
-const resultText =
-  document.getElementById("resultText");
-
-const retry =
-  document.getElementById("retry");
-
-
-/* =========================================
-   成功キャバリア
-========================================= */
-
-const happyDog = `
-
-<svg
-  viewBox="0 0 300 220"
-  class="result-dog"
-  aria-label="嬉しそうなキャバリア"
-  role="img"
->
-
-<ellipse
-  cx="150"
-  cy="199"
-  rx="78"
-  ry="11"
-  fill="#DDE8DE"
-/>
-
-<!-- 左耳 -->
-<path
-  d="M87 82
-     C53 61 37 91 48 125
-     C57 151 76 159 97 140
-     L108 102Z"
-  fill="#9B5B40"
-/>
-
-<!-- 右耳 -->
-<path
-  d="M213 82
-     C247 61 263 91 252 125
-     C243 151 224 159 203 140
-     L192 102Z"
-  fill="#9B5B40"
-/>
-
-<!-- 顔 -->
-<path
-  d="M82 87
-     C82 51 218 51 218 87
-     L208 155
-     C197 180 103 180 92 155Z"
-  fill="#FFF4DF"
-  stroke="#6B4638"
-  stroke-width="5"
-/>
-
-<!-- 頭 -->
-<path
-  d="M94 87
-     C108 60 192 60 206 87
-     C184 98 116 98 94 87Z"
-  fill="#9B5B40"
-/>
-
-<!-- 笑顔の目 -->
-<path
-  d="M108 120 Q119 110 130 120"
-  fill="none"
-  stroke="#35251F"
-  stroke-width="5"
-  stroke-linecap="round"
-/>
-
-<path
-  d="M170 120 Q181 110 192 120"
-  fill="none"
-  stroke="#35251F"
-  stroke-width="5"
-  stroke-linecap="round"
-/>
-
-<!-- 鼻 -->
-<ellipse
-  cx="150"
-  cy="136"
-  rx="15"
-  ry="11"
-  fill="#35251F"
-/>
-
-<!-- 笑顔 -->
-<path
-  d="M128 151 Q150 172 172 151"
-  fill="none"
-  stroke="#9B5B40"
-  stroke-width="5"
-  stroke-linecap="round"
-/>
-
-<!-- ほっぺ -->
-<circle
-  cx="103"
-  cy="145"
-  r="7"
-  fill="#F2B7A1"
-  opacity=".65"
-/>
-
-<circle
-  cx="197"
-  cy="145"
-  r="7"
-  fill="#F2B7A1"
-  opacity=".65"
-/>
-
-</svg>
-
-`;
-
-
-/* =========================================
-   失敗キャバリア
-========================================= */
-
-const sadDog = `
-
-<svg
-  viewBox="0 0 300 220"
-  class="result-dog"
-  aria-label="困った顔のキャバリア"
-  role="img"
->
-
-<ellipse
-  cx="150"
-  cy="199"
-  rx="78"
-  ry="11"
-  fill="#E7DDDC"
-/>
-
-<!-- 左耳 -->
-<path
-  d="M87 82
-     C53 61 37 91 48 125
-     C57 151 76 159 97 140
-     L108 102Z"
-  fill="#9B5B40"
-/>
-
-<!-- 右耳 -->
-<path
-  d="M213 82
-     C247 61 263 91 252 125
-     C243 151 224 159 203 140
-     L192 102Z"
-  fill="#9B5B40"
-/>
-
-<!-- 顔 -->
-<path
-  d="M82 87
-     C82 51 218 51 218 87
-     L208 155
-     C197 180 103 180 92 155Z"
-  fill="#FFF4DF"
-  stroke="#6B4638"
-  stroke-width="5"
-/>
-
-<!-- 頭 -->
-<path
-  d="M94 87
-     C108 60 192 60 206 87
-     C184 98 116 98 94 87Z"
-  fill="#9B5B40"
-/>
-
-<!-- 困った目 -->
-<path
-  d="M107 121 Q119 111 130 119"
-  fill="none"
-  stroke="#35251F"
-  stroke-width="5"
-  stroke-linecap="round"
-/>
-
-<path
-  d="M170 119 Q181 111 193 121"
-  fill="none"
-  stroke="#35251F"
-  stroke-width="5"
-  stroke-linecap="round"
-/>
-
-<!-- 鼻 -->
-<ellipse
-  cx="150"
-  cy="136"
-  rx="15"
-  ry="11"
-  fill="#35251F"
-/>
-
-<!-- しょんぼり口 -->
-<path
-  d="M128 158 Q150 143 172 158"
-  fill="none"
-  stroke="#9B5B40"
-  stroke-width="5"
-  stroke-linecap="round"
-/>
-
-</svg>
-
-`;
-
-
-/* =========================================
+/* ==================================================
    タイトル → ゲーム
-========================================= */
+================================================== */
 
-start.addEventListener(
+titleScreen.addEventListener(
   "click",
   startGame
 );
 
 
-/* =========================================
+/* ==================================================
    ゲーム開始
-========================================= */
+================================================== */
 
 function startGame(){
 
-  title.style.display =
+  titleScreen.style.display =
     "none";
 
-  game.style.display =
-    "block";
+  resultScreen.style.display =
+    "none";
 
-  result.className =
-    "result";
+  gameScreen.style.display =
+    "block";
 
   grid.innerHTML =
     "";
@@ -1156,7 +773,7 @@ function startGame(){
 
 
   /*
-    今回の9枚
+    今回の問題
   */
 
   const round =
@@ -1164,7 +781,7 @@ function startGame(){
 
 
   /*
-    9枚を表示
+    9枚表示
   */
 
   round.forEach(
@@ -1184,7 +801,7 @@ function startGame(){
 
         <img
           src="${item.src}"
-          alt="キャバリアの画像 ${i+1}"
+          alt="キャバリアの画像 ${i + 1}"
           loading="eager"
         >
 
@@ -1196,7 +813,7 @@ function startGame(){
 
 
       /*
-        正解画像かどうか記録
+        正解かどうか
       */
 
       tile.dataset.correct =
@@ -1204,7 +821,7 @@ function startGame(){
 
 
       /*
-        タップで選択・解除
+        選択 / 解除
       */
 
       tile.addEventListener(
@@ -1217,8 +834,8 @@ function startGame(){
 
 
           /*
-            1枚以上選択されている場合
-            決定ボタンを有効化
+            1枚以上選択されていれば
+            決定可能
           */
 
           confirmBtn.disabled =
@@ -1238,121 +855,133 @@ function startGame(){
 }
 
 
-/* =========================================
+/* ==================================================
    決定
-========================================= */
+================================================== */
 
 confirmBtn.addEventListener(
   "click",
-  ()=>{
-
-    const tiles =
-      [
-        ...document.querySelectorAll(
-          ".tile"
-        )
-      ];
-
-
-    /*
-      全9枚について、
-
-      当たり → 選択
-      ハズレ → 未選択
-
-      なら成功。
-    */
-
-    const ok =
-      tiles.every(
-        tile=>{
-
-          const selected =
-            tile.classList.contains(
-              "selected"
-            );
-
-          const correct =
-            tile.dataset.correct === "1";
-
-          return selected === correct;
-
-        }
-      );
-
-
-    /*
-      ゲーム画面を隠す
-    */
-
-    game.style.display =
-      "none";
-
-
-    /*
-      結果画面
-    */
-
-    result.className =
-      "result show " +
-      (ok ? "success" : "failure");
-
-
-    /* ==========================
-       成功
-    ========================== */
-
-    if(ok){
-
-      mark.innerHTML =
-        happyDog;
-
-      badge.textContent =
-        "AUTHENTICATION SUCCESS";
-
-      resultTitle.textContent =
-        "認証成功！";
-
-      resultText.textContent =
-        "ビンタをすべて見つけました。";
-
-    }
-
-
-    /* ==========================
-       失敗
-    ========================== */
-
-    else{
-
-      mark.innerHTML =
-        sadDog;
-
-      badge.textContent =
-        "AUTHENTICATION FAILED";
-
-      resultTitle.textContent =
-        "残念……！";
-
-      resultText.textContent =
-        "ニセビンタがいるよ！";
-
-    }
-
-  }
+  checkAnswer
 );
 
 
-/* =========================================
-   もう一回チャレンジ
-========================================= */
+/* ==================================================
+   正解判定
+================================================== */
 
-retry.addEventListener(
+function checkAnswer(){
+
+  const tiles = [
+    ...document.querySelectorAll(
+      ".tile"
+    )
+  ];
+
+
+  /*
+    当たり
+    → 選択
+
+    ハズレ
+    → 未選択
+
+    なら正解
+  */
+
+  const ok =
+    tiles.every(
+      tile=>{
+
+        const selected =
+          tile.classList.contains(
+            "selected"
+          );
+
+        const correct =
+          tile.dataset.correct === "1";
+
+        return selected === correct;
+
+      }
+    );
+
+
+  /*
+    ゲーム画面を隠す
+  */
+
+  gameScreen.style.display =
+    "none";
+
+
+  /*
+    結果画像を設定
+  */
+
+  if(ok){
+
+    /*
+      正解画像
+      image03.png
+    */
+
+    resultImage.src =
+      "image03.png";
+
+    resultImage.alt =
+      "大正解！ よく見つけました！";
+
+  }
+  else{
+
+    /*
+      不正解画像
+      image02.png
+    */
+
+    resultImage.src =
+      "image02.png";
+
+    resultImage.alt =
+      "残念…… ニセビンタがいるよ！";
+
+  }
+
+
+  /*
+    結果画面表示
+  */
+
+  resultScreen.style.display =
+    "block";
+
+
+  /*
+    ページ上部へ
+  */
+
+  window.scrollTo({
+    top:0,
+    behavior:"instant"
+  });
+
+}
+
+
+/* ==================================================
+   結果画面
+
+   どこをタップしても
+   → 新しい問題
+================================================== */
+
+resultScreen.addEventListener(
   "click",
   startGame
 );
 
 </script>
+
 
 </body>
 </html>
