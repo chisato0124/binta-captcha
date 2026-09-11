@@ -320,39 +320,55 @@ button.confirm:disabled{
   ビンタ認証
 
   当たり画像：
-  hit01.jpg ～ hit30.jpg
+  hit01.jpeg ～ hit30.jpeg
 
   ハズレ画像：
-  miss01.jpg ～ miss10.jpg
+  miss01.jpeg ～ miss10.jpeg
 
-  毎回、
-  ハズレ1～5枚をランダムに選択。
+  毎回9枚を表示。
 
-  残りを当たり画像で埋めて
-  合計9枚にする。
+  ハズレは1～5枚をランダムに選択。
+  残りを当たり画像で埋める。
 
-  当たり画像は4～8枚。
-  ハズレ画像は1～5枚。
+  つまり、
+
+  ハズレ1枚 → 当たり8枚
+  ハズレ2枚 → 当たり7枚
+  ハズレ3枚 → 当たり6枚
+  ハズレ4枚 → 当たり5枚
+  ハズレ5枚 → 当たり4枚
+
+  となる。
 
   同じラウンド内では画像を重複させない。
   ============================================
 */
 
 
-/* 当たり30枚 */
+/* ==========================================
+   当たり画像 30枚
+   ========================================== */
+
 const hits = Array.from(
   {length:30},
-  (_,i) => `hit${String(i+1).padStart(2,"0")}.jpg`
+  (_,i) => `hit${String(i+1).padStart(2,"0")}.jpeg`
 );
 
 
-/* ハズレ10枚 */
+/* ==========================================
+   ハズレ画像 10枚
+   ========================================== */
+
 const misses = Array.from(
   {length:10},
-  (_,i) => `miss${String(i+1).padStart(2,"0")}.
+  (_,i) => `miss${String(i+1).padStart(2,"0")}.jpeg`
+);
 
 
-/* 配列をランダムにシャッフル */
+/* ==========================================
+   配列をランダムにシャッフル
+   ========================================== */
+
 function shuffle(arr){
 
   const a=[...arr];
@@ -368,12 +384,17 @@ function shuffle(arr){
 }
 
 
-/* 1ゲーム分の9枚を作る */
+/* ==========================================
+   1ゲーム分の9枚を作る
+   ========================================== */
+
 function makeRound(){
 
   /*
-    ハズレ枚数を1～5枚でランダム決定
+    ハズレ枚数を
+    1～5枚からランダム決定
   */
+
   const missCount=
     Math.floor(Math.random()*5)+1;
 
@@ -381,29 +402,34 @@ function makeRound(){
   /*
     残りは当たり
   */
+
   const hitCount=
     9-missCount;
 
 
   /*
-    当たり画像を重複なしで抽選
+    当たり画像を
+    重複なしで抽選
   */
+
   const selectedHits=
     shuffle(hits).slice(0,hitCount);
 
 
   /*
-    ハズレ画像を重複なしで抽選
+    ハズレ画像を
+    重複なしで抽選
   */
+
   const selectedMisses=
     shuffle(misses).slice(0,missCount);
 
 
   /*
-    当たり・ハズレをまとめて、
-    最後に9枚全体をシャッフル
+    当たり・ハズレをまとめる
   */
-  return shuffle([
+
+  const roundItems=[
 
     ...selectedHits.map(
       src=>({
@@ -419,11 +445,22 @@ function makeRound(){
       })
     )
 
-  ]);
+  ];
+
+
+  /*
+    9枚全体をもう一度シャッフル
+    → 当たり・ハズレの位置も毎回変わる
+  */
+
+  return shuffle(roundItems);
 }
 
 
-/* HTML要素 */
+/* ==========================================
+   HTML要素
+   ========================================== */
+
 const grid=
   document.getElementById("grid");
 
@@ -452,197 +489,229 @@ const retry=
   document.getElementById("retry");
 
 
-/*
-  成功時のキャバリア
-*/
+/* ==========================================
+   成功時のキャバリア
+   ========================================== */
+
 const happyDog=`
 
 <svg
-viewBox="0 0 260 190"
-class="dog-illust"
-aria-label="キャバリアのイラスト"
-role="img"
+  viewBox="0 0 260 190"
+  class="dog-illust"
+  aria-label="キャバリアのイラスト"
+  role="img"
 >
 
 <ellipse
-cx="130"
-cy="165"
-rx="83"
-ry="15"
-fill="#d9e6f2"
+  cx="130"
+  cy="165"
+  rx="83"
+  ry="15"
+  fill="#d9e6f2"
 />
 
 <path
-d="M67 72 C37 39 28 83 49 111 C56 121 68 117 78 103Z"
-fill="#9b5b3f"
+  d="M67 72 C37 39 28 83 49 111 C56 121 68 117 78 103Z"
+  fill="#9b5b3f"
 />
 
 <path
-d="M193 72 C223 39 232 83 211 111 C204 121 192 117 182 103Z"
-fill="#9b5b3f"
+  d="M193 72 C223 39 232 83 211 111 C204 121 192 117 182 103Z"
+  fill="#9b5b3f"
 />
 
 <path
-d="M72 73 C83 39 177 39 188 73 L180 131 C170 156 90 156 80 131Z"
-fill="#fff4df"
-stroke="#6b4638"
-stroke-width="4"
+  d="M72 73 C83 39 177 39 188 73 L180 131 C170 156 90 156 80 131Z"
+  fill="#fff4df"
+  stroke="#6b4638"
+  stroke-width="4"
 />
 
 <path
-d="M86 65 C103 47 157 47 174 65 C158 72 102 72 86 65Z"
-fill="#9b5b3f"
+  d="M86 65 C103 47 157 47 174 65 C158 72 102 72 86 65Z"
+  fill="#9b5b3f"
 />
 
 <ellipse
-cx="101"
-cy="94"
-rx="10"
-ry="13"
-fill="#35251f"
+  cx="101"
+  cy="94"
+  rx="10"
+  ry="13"
+  fill="#35251f"
 />
 
 <ellipse
-cx="159"
-cy="94"
-rx="10"
-ry="13"
-fill="#35251f"
+  cx="159"
+  cy="94"
+  rx="10"
+  ry="13"
+  fill="#35251f"
 />
 
 <circle
-cx="98"
-cy="90"
-r="3"
-fill="#fff"
+  cx="98"
+  cy="90"
+  r="3"
+  fill="#fff"
 />
 
 <circle
-cx="156"
-cy="90"
-r="3"
-fill="#fff"
+  cx="156"
+  cy="90"
+  r="3"
+  fill="#fff"
 />
 
 <path
-d="M117 111 Q130 101 143 111 Q140 124 130 124 Q120 124 117 111Z"
-fill="#35251f"
+  d="M117 111 Q130 101 143 111 Q140 124 130 124 Q120 124 117 111Z"
+  fill="#35251f"
 />
 
 <path
-d="M114 130 Q130 144 146 130"
-fill="none"
-stroke="#9b5b3f"
-stroke-width="5"
-stroke-linecap="round"
+  d="M114 130 Q130 144 146 130"
+  fill="none"
+  stroke="#9b5b3f"
+  stroke-width="5"
+  stroke-linecap="round"
 />
 
 </svg>
+
 `;
 
 
-/*
-  失敗時のキャバリア
-*/
+/* ==========================================
+   失敗時のキャバリア
+   ========================================== */
+
 const sadDog=`
 
 <svg
-viewBox="0 0 260 190"
-class="dog-illust"
-aria-label="しょんぼりしたキャバリアのイラスト"
-role="img"
+  viewBox="0 0 260 190"
+  class="dog-illust"
+  aria-label="しょんぼりしたキャバリアのイラスト"
+  role="img"
 >
 
 <ellipse
-cx="130"
-cy="165"
-rx="83"
-ry="15"
-fill="#dfe0ea"
+  cx="130"
+  cy="165"
+  rx="83"
+  ry="15"
+  fill="#dfe0ea"
 />
 
 <path
-d="M67 72 C34 45 29 91 52 115 C61 124 72 116 79 101Z"
-fill="#8d5541"
+  d="M67 72 C34 45 29 91 52 115 C61 124 72 116 79 101Z"
+  fill="#8d5541"
 />
 
 <path
-d="M193 72 C226 45 231 91 208 115 C199 124 188 116 181 101Z"
-fill="#8d5541"
+  d="M193 72 C226 45 231 91 208 115 C199 124 188 116 181 101Z"
+  fill="#8d5541"
 />
 
 <path
-d="M72 73 C83 39 177 39 188 73 L180 132 C168 154 92 154 80 132Z"
-fill="#fff1dc"
-stroke="#63463d"
-stroke-width="4"
+  d="M72 73 C83 39 177 39 188 73 L180 132 C168 154 92 154 80 132Z"
+  fill="#fff1dc"
+  stroke="#63463d"
+  stroke-width="4"
 />
 
 <path
-d="M86 65 C102 48 158 48 174 65 C159 72 101 72 86 65Z"
-fill="#8d5541"
+  d="M86 65 C102 48 158 48 174 65 C159 72 101 72 86 65Z"
+  fill="#8d5541"
 />
 
 <path
-d="M91 94 Q101 86 111 94"
-fill="none"
-stroke="#35251f"
-stroke-width="5"
-stroke-linecap="round"
+  d="M91 94 Q101 86 111 94"
+  fill="none"
+  stroke="#35251f"
+  stroke-width="5"
+  stroke-linecap="round"
 />
 
 <path
-d="M149 94 Q159 86 169 94"
-fill="none"
-stroke="#35251f"
-stroke-width="5"
-stroke-linecap="round"
+  d="M149 94 Q159 86 169 94"
+  fill="none"
+  stroke="#35251f"
+  stroke-width="5"
+  stroke-linecap="round"
 />
 
 <ellipse
-cx="130"
-cy="111"
-rx="13"
-ry="10"
-fill="#35251f"
+  cx="130"
+  cy="111"
+  rx="13"
+  ry="10"
+  fill="#35251f"
 />
 
 <path
-d="M115 137 Q130 124 145 137"
-fill="none"
-stroke="#9b5b3f"
-stroke-width="5"
-stroke-linecap="round"
+  d="M115 137 Q130 124 145 137"
+  fill="none"
+  stroke="#9b5b3f"
+  stroke-width="5"
+  stroke-linecap="round"
 />
 
 <path
-d="M37 42 L25 28 M218 42 L230 28"
-stroke="#9aa0ad"
-stroke-width="4"
-stroke-linecap="round"
+  d="M37 42 L25 28 M218 42 L230 28"
+  stroke="#9aa0ad"
+  stroke-width="4"
+  stroke-linecap="round"
 />
 
 </svg>
+
 `;
 
 
-/*
-  ゲーム開始
-*/
+/* ==========================================
+   ゲーム開始
+   ========================================== */
+
 function startGame(){
+
+  /*
+    ゲーム画面を表示
+  */
 
   game.style.display="block";
 
+
+  /*
+    結果画面を非表示
+  */
+
   result.className="result";
 
+
+  /*
+    画像をいったん全部消す
+  */
+
   grid.innerHTML="";
+
+
+  /*
+    決定ボタンを無効化
+  */
 
   confirmBtn.disabled=true;
 
 
+  /*
+    今回の9枚を作る
+  */
+
   const round=
     makeRound();
 
+
+  /*
+    9枚を画面に表示
+  */
 
   round.forEach((item,i)=>{
 
@@ -653,6 +722,10 @@ function startGame(){
 
     tile.type="button";
 
+
+    /*
+      画像を表示
+    */
 
     tile.innerHTML=`
 
@@ -668,8 +741,10 @@ function startGame(){
 
 
     /*
-      この画像が当たりかどうかを記録
+      この画像が
+      当たりかハズレかを記録
     */
+
     tile.dataset.correct=
       item.correct ? "1" : "0";
 
@@ -677,14 +752,17 @@ function startGame(){
     /*
       タップで選択・解除
     */
+
     tile.addEventListener("click",()=>{
 
       tile.classList.toggle("selected");
 
+
       /*
-        1枚も選択されていなければ
-        決定ボタンを無効化
+        1枚以上選択されていれば
+        決定ボタンを有効化
       */
+
       confirmBtn.disabled=
         !document.querySelector(".tile.selected");
 
@@ -698,9 +776,10 @@ function startGame(){
 }
 
 
-/*
-  決定ボタン
-*/
+/* ==========================================
+   決定ボタン
+   ========================================== */
+
 confirmBtn.addEventListener("click",()=>{
 
   const tiles=
@@ -708,13 +787,14 @@ confirmBtn.addEventListener("click",()=>{
 
 
   /*
-    全画像について、
+    判定
 
     当たり → 選択されている
     ハズレ → 選択されていない
 
-    なら成功
+    これが9枚すべて正しければ成功。
   */
+
   const ok=
     tiles.every(t=>{
 
@@ -732,15 +812,21 @@ confirmBtn.addEventListener("click",()=>{
   /*
     ゲーム画面を隠す
   */
+
   game.style.display="none";
 
 
   /*
     成功・失敗画面を表示
   */
+
   result.className=
     "result show "+(ok?"success":"failure");
 
+
+  /*
+    成功
+  */
 
   if(ok){
 
@@ -756,7 +842,14 @@ confirmBtn.addEventListener("click",()=>{
     resultText.textContent=
       "よく見つけました！ビンタをすべて発見しました。";
 
-  }else{
+  }
+
+
+  /*
+    失敗
+  */
+
+  else{
 
     mark.innerHTML=
       sadDog;
@@ -775,18 +868,20 @@ confirmBtn.addEventListener("click",()=>{
 });
 
 
-/*
-  もう一回チャレンジ
-*/
+/* ==========================================
+   もう一回チャレンジ
+   ========================================== */
+
 retry.addEventListener(
   "click",
   startGame
 );
 
 
-/*
-  最初のゲームを開始
-*/
+/* ==========================================
+   最初のゲームを開始
+   ========================================== */
+
 startGame();
 
 </script>
